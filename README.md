@@ -1,8 +1,5 @@
 # Phishing Email Detection System (ML + NLP + Flask)
 
-## Live Demo
-
-Live Application: [link](https://phishing-email-detection-su6j.onrender.com/)
 
 ## Project Overview
 

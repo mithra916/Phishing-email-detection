@@ -1,5 +1,12 @@
-function checkEmail() {
+function analyzeEmail() {
     const emailText = document.getElementById("emailText").value;
+    const resultDiv = document.getElementById("result");
+
+    if (emailText.trim() === "") {
+        resultDiv.innerHTML = "⚠️ Please enter email content";
+        resultDiv.style.color = "red";
+        return;
+    }
 
     fetch("/predict", {
         method: "POST",
@@ -8,17 +15,26 @@ function checkEmail() {
         },
         body: JSON.stringify({ email_text: emailText })
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
-        let resultDiv = document.getElementById("result");
-        if (data.prediction === "Phishing Email") {
+        resultDiv.innerHTML = `
+            <b>Prediction:</b> ${data.prediction}<br>
+            <b>Confidence:</b> ${(data.confidence * 100).toFixed(2)}%<br>
+            <b>Emotion Risk Score:</b> ${(data.emotion_score * 100).toFixed(1)}%<br>
+            <b>Risk Level:</b> ${data.risk_level}<br>
+            <b>URLs Found:</b> ${data.url_count}
+        `;
+
+        if (data.risk_level === "High") {
             resultDiv.style.color = "red";
+        } else if (data.risk_level === "Medium") {
+            resultDiv.style.color = "orange";
         } else {
             resultDiv.style.color = "green";
         }
-
-        resultDiv.innerHTML =
-            `Prediction: ${data.prediction}<br>
-             Confidence: ${data.confidence ? (data.confidence*100).toFixed(2) + '%' : 'N/A'}`;
+    })
+    .catch(error => {
+        resultDiv.innerHTML = "❌ Error analyzing email";
+        resultDiv.style.color = "red";
     });
 }
