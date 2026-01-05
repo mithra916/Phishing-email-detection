@@ -76,15 +76,15 @@ python app.py
 Open browser:
 http://127.0.0.1:5000/
 
-## Limitations (Honest)
-This is not a production-grade email gateway
-Model depends on dataset quality
-Emotion detection adds latency on CPU
-Advanced spear-phishing may bypass heuristics
+## Limitations 
+- This is not a production-grade email gateway
+- Model depends on dataset quality
+- Emotion detection adds latency on CPU
+- Advanced spear-phishing may bypass heuristics
 
 ## Future Improvements
-Header analysis (SPF, DKIM, DMARC)
-Domain reputation checks
-Attachment scanning
-Online learning with feedback loop
-SOC-style alert dashboard with logs
+- Header analysis (SPF, DKIM, DMARC)
+- Domain reputation checks
+- Attachment scanning
+- Online learning with feedback loop
+- SOC-style alert dashboard with logs
