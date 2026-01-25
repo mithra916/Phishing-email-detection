@@ -1,20 +1,7 @@
 flask
-pandas
-numpy
-scikit-learn
 joblib
-
-# ML Models
+scikit-learn
 catboost
-xgboost
-
-# NLP
+numpy
+pandas
 regex
-
-# Emotion Detection (Transformer-based)
-transformers
-torch
-
-# Utilities
-requests
-tqdm
