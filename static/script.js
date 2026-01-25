@@ -10,9 +10,7 @@ function analyzeEmail() {
 
     fetch("/predict", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email_text: emailText })
     })
     .then(response => response.json())
@@ -20,9 +18,11 @@ function analyzeEmail() {
         resultDiv.innerHTML = `
             <b>Prediction:</b> ${data.prediction}<br>
             <b>Confidence:</b> ${(data.confidence * 100).toFixed(2)}%<br>
-            Emotion Risk Score: ${(data.emotion_score * 100).toFixed(1)}%<br>
+            <b>Emotion Risk Score:</b> ${(data.emotion_score * 100).toFixed(1)}%<br>
             <b>Risk Level:</b> ${data.risk_level}<br>
-            <b>URLs Found:</b> ${data.url_count}
+            <b>URLs Found:</b> ${data.url_count}<br>
+            <b>Threat Type:</b> ${data.threat_type}<br>
+            <b>Reasons:</b> ${data.reasons.length ? data.reasons.join(", ") : "None"}
         `;
 
         if (data.risk_level === "High") {
