@@ -1,28 +1,17 @@
-from transformers import pipeline
+EMOTIONAL_TRIGGERS = {
+    "fear": ["scared", "afraid", "panic", "compromised"],
+    "urgency": ["urgent", "immediately", "now", "asap", "24 hours"],
+    "threat": ["suspend", "disable", "terminate", "blocked"],
+    "pressure": ["verify", "confirm", "act now"]
+}
 
-# Lightweight emotion classifier (CPU friendly)
-emotion_classifier = pipeline(
-    "text-classification",
-    model="j-hartmann/emotion-english-distilroberta-base",
-    top_k=None
-)
+def get_emotion_score(text):
+    text = text.lower()
+    hits = 0
 
-def get_emotion_score(text: str) -> float:
-    """
-    Returns normalized emotional manipulation score (0–1)
-    Focused on fear, urgency, anger
-    """
+    for group in EMOTIONAL_TRIGGERS.values():
+        for word in group:
+            if word in text:
+                hits += 1
 
-    try:
-        results = emotion_classifier(text[:512])[0]  # truncate for safety
-    except Exception:
-        return 0.0
-
-    high_risk_emotions = {"fear", "anger", "sadness"}
-
-    score = 0.0
-    for item in results:
-        if item["label"].lower() in high_risk_emotions:
-            score += item["score"]
-
-    return round(min(score, 1.0), 2)
+    return round(min(hits / 6, 1.0), 2)
