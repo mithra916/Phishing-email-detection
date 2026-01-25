@@ -5,18 +5,12 @@ from src.predict import predict_email
 
 app = Flask(__name__)
 
-# Load model & vectorizer
-MODEL_PATH = "models/catboost.pkl"
-VECTORIZER_PATH = "models/tfidf_vectorizer.pkl"
-
-model = joblib.load(MODEL_PATH)
-vectorizer = joblib.load(VECTORIZER_PATH)
-
+model = joblib.load("models/catboost.pkl")
+vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
 
 @app.route("/")
 def index():
     return render_template("index.html")
-
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -24,11 +18,10 @@ def predict():
     email_text = data.get("email_text", "")
 
     if not email_text.strip():
-        return jsonify({"error": "Empty email content"}), 400
+        return jsonify({"error": "Empty email"}), 400
 
     result = predict_email(email_text, model, vectorizer)
     return jsonify(result)
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
