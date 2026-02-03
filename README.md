@@ -61,7 +61,7 @@ Final output includes:
 - Emotion risk score
 - URL count
 - Threat type
-- Reasons (explainability)
+- Reasons 
 
 ## How to Run
 1.Install dependencies : 
