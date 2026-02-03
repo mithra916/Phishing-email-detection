@@ -88,3 +88,9 @@ http://127.0.0.1:5000/
 - Attachment scanning
 - Online learning with feedback loop
 - SOC-style alert dashboard with logs
+
+```
+Author - Loga Mithra R
+Collaborator - Santhosh Kumar R
+Cyber Security Students | Saveetha Engineering college
+```
