@@ -1,4 +1,4 @@
-# Phishing Email Detection System
+# BodWid - Phishing Email Detection System
 
 ## Project Overview
 
@@ -20,11 +20,13 @@ Trained models:
 - SVM
 - Naive Bayes
 Final system uses CatBoost for best balance of performance and interpretability
+---
 
 ### Explainability (Cyber-Focused)
 Instead of returning only a label, the system explains:
 - Why the email was flagged
 - Which risk indicators were detected
+--- 
 
 ### Emotional Manipulation Detection
 Uses a transformer-based emotion model to detect:
@@ -33,6 +35,7 @@ Uses a transformer-based emotion model to detect:
 - Pressure
 - Manipulative tone
 Emotional score is combined with ML prediction to reduce false negatives in social engineering attacks.
+---
 
 ### Rule-Based Attack Feature Engineering
 Cyber-specific heuristics:
@@ -44,6 +47,8 @@ Cyber-specific heuristics:
 - Excessive capitalization
 These rules help reduce false positives and false negatives, especially in edge cases like CEO fraud (BEC).
 
+---
+
 ### Threat Categorization
 Instead of binary output, emails are categorized into:
 - Credential Harvesting
@@ -52,6 +57,7 @@ Instead of binary output, emails are categorized into:
 - Social Engineering
 - Benign / Informational
 This mirrors real SOC alert classification.
+---
 
 ### Risk Scoring System
 Final output includes:
