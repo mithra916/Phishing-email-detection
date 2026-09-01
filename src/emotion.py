@@ -1,17 +1,46 @@
-EMOTIONAL_TRIGGERS = {
-    "fear": ["scared", "afraid", "panic", "compromised"],
-    "urgency": ["urgent", "immediately", "now", "asap", "24 hours"],
-    "threat": ["suspend", "disable", "terminate", "blocked"],
-    "pressure": ["verify", "confirm", "act now"]
+from transformers import pipeline
+
+
+_emotion_model = None
+
+RISKY = {
+    "fear",
+    "anger",
+    "sadness",
+    "disgust",
 }
 
+
+def _get_emotion_model():
+    global _emotion_model
+
+    if _emotion_model is None:
+        _emotion_model = pipeline(
+            "text-classification",
+            model="j-hartmann/emotion-english-distilroberta-base",
+            top_k=None,
+        )
+
+    return _emotion_model
+
+
 def get_emotion_score(text):
-    text = text.lower()
-    hits = 0
+    if not isinstance(text, str):
+        return 0.0
 
-    for group in EMOTIONAL_TRIGGERS.values():
-        for word in group:
-            if word in text:
-                hits += 1
+    if len(text.strip()) < 20:
+        return 0.0
 
-    return round(min(hits / 6, 1.0), 2)
+    emotion_classifier = _get_emotion_model()
+
+    results = emotion_classifier(
+        text[:512]
+    )[0]
+
+    score = sum(
+        result["score"]
+        for result in results
+        if result["label"].lower() in RISKY
+    )
+
+    return min(score, 1.0)
